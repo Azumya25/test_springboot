@@ -2,8 +2,9 @@ package com.example.demo.Student;
 
 import jakarta.persistence.*;
 
-import java.lang.reflect.Constructor;
 import java.time.LocalDate;
+import java.time.Period;
+
 @Entity
 @Table
 public class student {
@@ -21,21 +22,20 @@ public class student {
     private String name;
     private LocalDate dob;
     private String email;
+    @Transient
     private Integer age;
 
-    public student(Integer age, String email, LocalDate dob, String name) {
-        this.age = age;
+    public student(String name, LocalDate dob,String email) {
         this.email = email;
         this.dob = dob;
         this.name = name;
     }
 
-    public student(Long id, String name, LocalDate dob, String email, Integer age) {
+    public student(Long id, String name, LocalDate dob, String email) {
         this.id = id;
         this.name = name;
         this.dob = dob;
         this.email = email;
-        this.age = age;
     }
 
     public student() {
@@ -74,12 +74,10 @@ public class student {
     }
 
     public Integer getAge() {
-        return age;
+        return Period.between(this.dob, LocalDate.now()).getYears();
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+
 
     @Override
     public String toString() {
